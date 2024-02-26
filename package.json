@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "generate": "tsx src/generate.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +14,16 @@
   "dependencies": {
     "@langchain/community": "^0.0.32",
     "@langchain/core": "^0.1.32",
-    "langchain": "^0.1.21"
+    "@langchain/openai": "^0.0.14",
+    "dotenv": "^16.4.5",
+    "jsdom": "^24.0.0",
+    "langchain": "^0.1.21",
+    "p-limit": "^5.0.0",
+    "puppeteer": "^22.2.0"
   },
   "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "@types/jsdom": "^21.1.6",
     "tsx": "^4.7.1"
   }
 }
