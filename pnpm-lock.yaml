@@ -14,6 +14,12 @@ dependencies:
   '@langchain/openai':
     specifier: ^0.0.14
     version: 0.0.14
+  '@types/ms':
+    specifier: ^0.7.34
+    version: 0.7.34
+  '@types/prompts':
+    specifier: ^2.4.9
+    version: 2.4.9
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
@@ -23,9 +29,15 @@ dependencies:
   langchain:
     specifier: ^0.1.21
     version: 0.1.21(jsdom@24.0.0)(puppeteer@22.2.0)
+  ms:
+    specifier: ^2.1.3
+    version: 2.1.3
   p-limit:
     specifier: ^5.0.0
     version: 5.0.0
+  prompts:
+    specifier: ^2.4.2
+    version: 2.4.2
   puppeteer:
     specifier: ^22.2.0
     version: 22.2.0
@@ -620,6 +632,10 @@ packages:
       parse5: 7.1.2
     dev: true
 
+  /@types/ms@0.7.34:
+    resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
+    dev: false
+
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
@@ -631,6 +647,13 @@ packages:
     resolution: {integrity: sha512-80CP7B8y4PzZF0GWx15/gVWRrB5y/bIjNI84NK3cmQJu0WZwvmj2WMA5LcofQFVfLqqCSp545+U2LsrVzX36Zg==}
     dependencies:
       undici-types: 5.26.5
+
+  /@types/prompts@2.4.9:
+    resolution: {integrity: sha512-qTxFi6Buiu8+50/+3DGIWLHM6QuWsEKugJnnP6iv2Mc4ncxE4A/OJkjuVOA+5X0X1S/nq5VJRa8Lu+nwcvbrKA==}
+    dependencies:
+      '@types/node': 18.19.18
+      kleur: 3.0.3
+    dev: false
 
   /@types/retry@0.12.0:
     resolution: {integrity: sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==}
@@ -1323,6 +1346,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /kleur@3.0.3:
+    resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
+    engines: {node: '>=6'}
+    dev: false
+
   /langchain@0.1.21(jsdom@24.0.0)(puppeteer@22.2.0):
     resolution: {integrity: sha512-OOcCFIgx23WyyNS1VJBLbC3QL5plQBVfp2drXw1OJAarZ8yEY3cgJq8NbTY37sMnLoJ2olFEzMuAOdlTur4cwQ==}
     engines: {node: '>=18'}
@@ -1808,6 +1836,14 @@ packages:
     engines: {node: '>=0.4.0'}
     dev: false
 
+  /prompts@2.4.2:
+    resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
+    engines: {node: '>= 6'}
+    dependencies:
+      kleur: 3.0.3
+      sisteransi: 1.0.5
+    dev: false
+
   /proxy-agent@6.4.0:
     resolution: {integrity: sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==}
     engines: {node: '>= 14'}
@@ -1931,6 +1967,10 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: false
+
+  /sisteransi@1.0.5:
+    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: false
 
   /smart-buffer@4.2.0:
