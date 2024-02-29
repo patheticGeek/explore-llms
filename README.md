@@ -26,7 +26,7 @@ Just exploring gpt and shit
 
 ### Generating a dataset & running
 
-- Get your bookmarks or use my bookmarks json (./sample-bookmarks.html)
+- Get your bookmarks or use my bookmarks json [./sample/bookmarks.html](sample/bookmarks.html)
 
   Save the bookmarks at root with filename `./bookmarks.html`
 
@@ -38,7 +38,7 @@ Just exploring gpt and shit
 
   This will parse bookmarks file & run puppeteer and grab title & meta for all bookmarks
 
-  This data will be put in `./dataset.json` and then put in vector db when running
+  This data will be put in `./dataset.json` ([sample](sample/dataset.json)) and then put in vector db when running
 
 - And now you can run the main process and give a prompt
   ```
