@@ -2,7 +2,7 @@
 
 Just exploring gpt and shit
 
-### How to start
+### Setup
 
 - Get ollama & docker
 
@@ -18,8 +18,29 @@ Just exploring gpt and shit
   docker-compose up -d
   ```
 
-- Start the project
+- Install the deps
+
   ```
   pnpm i # install deps
-  pnpm dev # runs
+  ```
+
+### Generating a dataset & running
+
+- Get your bookmarks or use my bookmarks json (./sample-bookmarks.html)
+
+  Save the bookmarks at root with filename `./bookmarks.html`
+
+- Now you generate the dataset
+
+  ```
+  pnpm generate
+  ```
+
+  This will parse bookmarks file & run puppeteer and grab title & meta for all bookmarks
+
+  This data will be put in `./dataset.json` and then put in vector db when running
+
+- And now you can run the main process and give a prompt
+  ```
+  pnpm dev
   ```

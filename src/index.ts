@@ -10,7 +10,7 @@ const main = async () => {
     await prompts({
       type: "text",
       name: "value",
-      message: "What do you want?",
+      message: "What resource are you looking for?",
     })
   ).value;
 
