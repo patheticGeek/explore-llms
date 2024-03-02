@@ -2,6 +2,11 @@
 
 Just exploring gpt and shit
 
+The goal here is to make an assistant that can find websites for people's described use case from my bookmarks.
+
+Sample -
+![Sample prompt](sample/sample.png)
+
 ### Setup
 
 - Get ollama & docker
