@@ -9,19 +9,11 @@ Sample -
 
 ### Setup
 
-- Get ollama & docker
+- You need to get [cohere](https://cohere.com/) api key & setup a [upstash](https://upstash.com/) vector db
 
-- Install a ollama model
+  then put their keys in `.env` file, a [sample](sample.env) is given
 
-  ```
-  ollama run mistral
-  ```
-
-- Start docker compose so we have postgres with pgvector running
-
-  ```
-  docker-compose up -d
-  ```
+  I am using cohere trial api key so no cost for it and upstash has a good enough free tier for my use.
 
 - Install the deps
 
@@ -44,6 +36,12 @@ Sample -
   This will parse bookmarks file & run puppeteer and grab title & meta for all bookmarks
 
   This data will be put in `./dataset.json` ([sample](sample/dataset.json)) and then put in vector db when running
+
+- Now put the dataset in the vector db
+
+  ```
+  pnpm syncDataset
+  ```
 
 - And now you can run the main process and give a prompt
   ```
