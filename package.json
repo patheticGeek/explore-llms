@@ -5,16 +5,20 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx src/index.ts",
-    "generate": "tsx src/generate.ts"
+    "start": "tsx src/index.ts",
+    "generate": "tsx src/generate.ts",
+    "syncDataset": "tsx src/syncDataset.ts"
   },
   "keywords": [],
   "author": "Pathetic Geek",
   "license": "ISC",
   "dependencies": {
+    "@langchain/cohere": "^0.0.5",
     "@langchain/community": "^0.0.32",
     "@langchain/core": "^0.1.32",
     "@langchain/openai": "^0.0.14",
+    "@upstash/vector": "^1.0.3",
+    "cohere-ai": "^7.7.5",
     "dotenv": "^16.4.5",
     "jsdom": "^24.0.0",
     "langchain": "^0.1.21",
