@@ -1,4 +1,4 @@
-import { Cohere } from "@langchain/cohere";
+import { ChatCohere } from "@langchain/cohere";
 import { config } from "dotenv";
 import ms from "ms";
 import prompts from "prompts";
@@ -22,31 +22,37 @@ const main = async () => {
 
   const { vectorStore } = getVectorStore();
   const vectorResults = await vectorStore.similaritySearch(prompt, 10);
-  console.log(
-    "vectorResults",
-    ms(performance.now() - start),
-    "vectorResults.length",
-    vectorResults.length
-  );
+  console.log("vectorResults", ms(performance.now() - start));
 
-  const chatModel = new Cohere({});
+  const chatModel = new ChatCohere({
+    temperature: 0,
+    maxRetries: 1,
+  });
 
-  const result = await chatModel.invoke(
-    `
+  const chatMessage = `
 You are Pathetic Geek's assistant which is built to help people find resources from his bookmarks.
 
 The user wants a website as follows:
 ${prompt}
 
 The bookmarks that match the prompt are as follows:
-${vectorResults.map((r) => `- ${r.pageContent}`).join("\n")}
+${
+  vectorResults.length
+    ? vectorResults
+        .map(
+          ({ pageContent, metadata }) =>
+            `URL: ${metadata.url}\nName:${metadata.name}\nFolder: ${metadata.folder}\nSummary: ${pageContent}`
+        )
+        .join("\n")
+    : "No websites found using the query"
+}
 
 What are the best websites for the user to checkout? Give a list of 4 websites from the above list only. Also give the url and a short description:
-  `.trim()
-  );
+    `.trim();
+  const result = await chatModel.invoke(chatMessage);
 
   console.log("result generated in", ms(performance.now() - start));
-  console.log("result\n", result);
+  console.log(`Got output ${result}`);
 
   return "Done...";
 };

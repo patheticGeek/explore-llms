@@ -9,6 +9,7 @@ export type Bookmark = {
   name: string;
   url: string;
   createdAt: number;
+  level: number;
 };
 
 export type Folder = {
@@ -20,3 +21,8 @@ export type Folder = {
 };
 
 export type BookmarkItem = Bookmark | Folder;
+
+export type DatasetItem = {
+  pageContent: string;
+  metadata: Omit<Bookmark, "level" | "type"> & { folders?: string };
+};

@@ -1,9 +1,10 @@
 import pLimit from "p-limit";
 import puppeteer, { Browser } from "puppeteer";
+import { turndownService } from "./turndownService";
 
 const createPage = async (browser: Browser) => {
   const page = await browser.newPage();
-  await page.setViewport({ width: 1080, height: 1024 });
+  await page.setViewport({ width: 1080, height: 1920 });
   await page.setUserAgent(
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
   );
@@ -20,30 +21,23 @@ const processPage = async ({
   const page = await createPage(browser);
   await page.goto(url);
 
-  const tags = await page.$$eval("meta", (elements) => {
-    const properties: Array<[string, string] | undefined> = elements.map(
-      (e) => {
-        const name = e.getAttribute("property") || e.getAttribute("name") || "";
-        const cleanName = name.replace("og:", "");
-        const content = e.getAttribute("content") || e.innerText;
-        if (["title", "description"].includes(cleanName) && content) {
-          return [name, content] as const;
-        }
-      }
-    );
-    const cleanProps = properties.filter(Boolean) as Array<[string, string]>;
-    return Object.fromEntries(cleanProps);
-  });
+  const html = await page.$eval("body", (e) => e.outerHTML);
+  const markdown = turndownService.turndown(html);
 
-  if (!tags.title) {
-    tags.title = await page.$eval("title", (e) => e.innerText);
-  }
+  //   const directive = `
+  // You are a bot who should summarize websites using their content provided to you in markdown format.
+  // In the summary you should describe what the website can be used for in under 200 words.
+  // There should be no html tags in the summary.
+  // You should not describe what the website is made up of.
+  // The summary should be like paragraphs for humans to read.
+  //   `.trim();
+  //   const messages = `Following is a website's content who's url is ${url}\n\n${markdown}`;
 
-  console.log(`[${url}]`, tags);
+  //   const tokens = await model.getNumTokens(`${directive}\n\n${messages}`);
 
   await page.close();
 
-  return tags;
+  return markdown;
 };
 
 const getPageSummaries = async (pages: Array<{ id: string; url: string }>) => {
@@ -53,12 +47,19 @@ const getPageSummaries = async (pages: Array<{ id: string; url: string }>) => {
   const result: Record<string, Awaited<ReturnType<typeof processPage>>> = {};
 
   const promises: Array<Promise<any>> = [];
-  for (const page of pages) {
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
     promises.push(
       limit(() =>
         processPage({ browser, url: page.url })
-          .then((res) => (result[page.id] = res))
-          .catch((err) => (result[page.id] = err))
+          .then((res) => {
+            result[page.id] = res;
+            console.log(`[processPage] done ${i} ${page.url}`);
+          })
+          .catch(async (err) => {
+            console.log(`[processPage] error ${i} ${page.url} ${err}`);
+            result[page.id] = err;
+          })
       )
     );
   }
