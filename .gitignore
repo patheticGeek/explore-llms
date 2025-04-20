@@ -3,6 +3,7 @@ data
 
 .env*
 
+dataset
 dataset.json
 bookmarks.html
 

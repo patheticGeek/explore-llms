@@ -2,12 +2,13 @@
   "name": "explore-llms",
   "version": "0.0.1",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/query.ts",
   "type": "module",
   "scripts": {
-    "start": "tsx src/index.ts",
-    "generate": "tsx src/generate.ts",
-    "syncDataset": "tsx src/syncDataset.ts"
+    "query": "tsx src/query.ts",
+    "generateDataset": "tsx src/generateDataset.ts",
+    "syncDataset": "tsx src/syncDataset.ts",
+    "oneOffScript": "tsx src/oneOffScript.ts"
   },
   "keywords": [],
   "author": "Pathetic Geek",
