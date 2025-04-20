@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import fs from "node:fs/promises";
 import getBookmarksFromFile from "./bookmarks/getBookmarksFromFile";
-import getPageSummaries from "./bookmarks/processBookmarks";
+import getPagesHTML from "./bookmarks/getPagesHTML";
 import {
   Bookmark,
   BookmarkItem,
@@ -12,6 +12,12 @@ import {
 
 config();
 
+const ensureDir = async (path: string) => {
+  try {
+    await fs.mkdir(path, { recursive: true });
+  } catch (err) {}
+};
+
 const getPagesFromBookmarks = (item: BookmarkItem): Array<Bookmark> => {
   if (item.type === ITEM_TYPE.FOLDER) {
     return item.children.map(getPagesFromBookmarks).flat();
@@ -19,15 +25,19 @@ const getPagesFromBookmarks = (item: BookmarkItem): Array<Bookmark> => {
   return [item];
 };
 
-const processItem = (
+const processBookmark = async (
   item: Bookmark,
-  summaries: Awaited<ReturnType<typeof getPageSummaries>>,
+  summaries: Awaited<ReturnType<typeof getPagesHTML>>,
   folders: Array<Folder>
-): DatasetItem | undefined => {
+): Promise<DatasetItem | undefined> => {
   if (!summaries[item.id]) return undefined;
+
   const { level, type, ...metadata } = item;
+  const path = `./dataset/pageContent/${metadata.id}.html`;
+
+  await fs.writeFile(path, summaries[item.id]);
   return {
-    pageContent: summaries[item.id],
+    pageContent: path,
     metadata: {
       ...metadata,
       folders: folders.length
@@ -37,35 +47,36 @@ const processItem = (
   };
 };
 
-const processBookmarksWithSummaries = (
+const processBookmarks = async (
   item: BookmarkItem,
-  summaries: Awaited<ReturnType<typeof getPageSummaries>>,
+  summaries: Awaited<ReturnType<typeof getPagesHTML>>,
   folders: Array<Folder> = []
-): Array<DatasetItem> => {
+): Promise<Array<DatasetItem>> => {
   if (item.type === ITEM_TYPE.FOLDER) {
-    return item.children
-      .map((i) =>
-        processBookmarksWithSummaries(i, summaries, [...folders, item])
+    const res = await Promise.all(
+      item.children.map((i) =>
+        processBookmarks(i, summaries, [...folders, item])
       )
-      .flat();
+    );
+    return res.flat();
   }
 
-  const result = processItem(item, summaries, folders);
+  const result = await processBookmark(item, summaries, folders);
   return result ? [result] : [];
 };
 
 const main = async () => {
+  await ensureDir("./dataset/pageContent");
+
   const bookmarks = getBookmarksFromFile("./bookmarks.html");
 
   const pages = getPagesFromBookmarks(bookmarks);
 
-  const summaries = await getPageSummaries(pages);
+  const pagesHTML = await getPagesHTML(pages);
 
-  console.log("Have summaries");
+  const data = await processBookmarks(bookmarks, pagesHTML);
 
-  const data = processBookmarksWithSummaries(bookmarks, summaries);
-
-  await fs.writeFile("./dataset.json", JSON.stringify(data, null, 2));
+  await fs.writeFile("./dataset/index.json", JSON.stringify(data, null, 2));
 
   return "Done...";
 };

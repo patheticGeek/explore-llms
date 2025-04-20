@@ -30,6 +30,8 @@
     "p-limit": "^5.0.0",
     "prompts": "^2.4.2",
     "puppeteer": "^22.2.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "turndown": "^7.1.2"
   },
   "devDependencies": {
