@@ -7,6 +7,9 @@ The goal here is to make an assistant that can find websites for people's descri
 Sample -
 ![Sample prompt](sample/sample.png)
 
+> [!WARNING]
+> This is outdated, have added other stuff no time to docs
+
 ### Setup
 
 - You need to get [cohere](https://cohere.com/) api key & setup a [upstash](https://upstash.com/) vector db
