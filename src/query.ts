@@ -55,7 +55,7 @@ const main = async () => {
   ).value;
 
   if (!prompt) throw new Error("Provide a prompt");
-  console.log(`Getting sites for ya...`);
+  console.log(`Getting it for ya...`);
 
   const start = performance.now();
 
@@ -79,7 +79,7 @@ const main = async () => {
     });
 
     if (response.functionCalls?.length) {
-      console.log("Get function call in response", response.functionCalls);
+      console.log("function calls", response.functionCalls);
       const responses = await Promise.all(
         response.functionCalls.map(async (functionCall) => {
           if (
@@ -107,15 +107,14 @@ const main = async () => {
         });
       });
     } else {
+      console.log("text response:", response.text);
       haveAnswer = true;
     }
   }
 
   console.log("result generated in", ms(performance.now() - start));
-  console.log(response?.text);
 
   return "Done...";
 };
 
-console.log("Started...");
 main().then(console.log).catch(console.error);
