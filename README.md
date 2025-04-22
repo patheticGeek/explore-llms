@@ -69,7 +69,7 @@ Done...
 
 - Get your bookmarks or use my bookmarks json [./sample/bookmarks.html](sample/bookmarks.html)
 
-Save the bookmarks at top level (next to package.json) with filename `./bookmarks.html`
+  Save the bookmarks at top level (next to package.json) with filename `./bookmarks.html`
 
 - Now you generate the dataset
 
@@ -77,9 +77,9 @@ Save the bookmarks at top level (next to package.json) with filename `./bookmark
   pnpm generateDataset
   ```
 
-This will parse bookmarks file & run puppeteer and grab content for all bookmarks
+  This will parse bookmarks file & run puppeteer and grab content for all bookmarks
 
-This data will be put in `./dataset` folder
+  This data will be put in `./dataset` folder
 
 - Now we summarize using gemini and index these pages into vector db
 
