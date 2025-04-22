@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import fs from "node:fs/promises";
 import getBookmarksFromFile from "./bookmarks/getBookmarksFromFile";
-import getPagesHTML from "./bookmarks/getPagesHTML";
+import getPagesContent from "./bookmarks/getPagesContent";
 import {
   Bookmark,
   BookmarkItem,
@@ -27,7 +27,7 @@ const getPagesFromBookmarks = (item: BookmarkItem): Array<Bookmark> => {
 
 const processBookmark = async (
   item: Bookmark,
-  summaries: Awaited<ReturnType<typeof getPagesHTML>>,
+  summaries: Awaited<ReturnType<typeof getPagesContent>>,
   folders: Array<Folder>
 ): Promise<DatasetItem | undefined> => {
   if (!summaries[item.id]) return undefined;
@@ -49,7 +49,7 @@ const processBookmark = async (
 
 const processBookmarks = async (
   item: BookmarkItem,
-  summaries: Awaited<ReturnType<typeof getPagesHTML>>,
+  summaries: Awaited<ReturnType<typeof getPagesContent>>,
   folders: Array<Folder> = []
 ): Promise<Array<DatasetItem>> => {
   if (item.type === ITEM_TYPE.FOLDER) {
@@ -72,7 +72,7 @@ const main = async () => {
 
   const pages = getPagesFromBookmarks(bookmarks);
 
-  const pagesHTML = await getPagesHTML(pages);
+  const pagesHTML = await getPagesContent(pages);
 
   const data = await processBookmarks(bookmarks, pagesHTML);
 

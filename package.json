@@ -7,8 +7,7 @@
   "scripts": {
     "query": "tsx src/query.ts",
     "generateDataset": "tsx src/generateDataset.ts",
-    "summarizeDataset": "tsx src/summarizeDataset.ts",
-    "oneOffScript": "tsx src/oneOffScript.ts"
+    "summarizeAndIndex": "tsx src/summarizeAndIndex.ts"
   },
   "keywords": [],
   "author": "Pathetic Geek",
